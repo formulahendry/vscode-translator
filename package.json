@@ -1,26 +1,67 @@
 {
     "name": "translator",
     "displayName": "Translator",
-    "description": "Translator",
+    "description": "Translate between English and Chinese",
     "version": "0.0.1",
     "publisher": "formulahendry",
+    "icon": "logo.png",
     "engines": {
-        "vscode": "^1.27.0"
+        "vscode": "^1.26.0"
     },
     "categories": [
         "Other"
     ],
+    "keywords": [
+        "Translator",
+        "English",
+        "Chinese"
+    ],
+    "bugs": {
+        "url": "https://github.com/formulahendry/vscode-translator/issues",
+        "email": "formulahendry@gmail.com"
+    },
+    "homepage": "https://github.com/formulahendry/vscode-translator/blob/master/README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/formulahendry/vscode-translator.git"
+    },
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "*",
+        "onCommand:translator.translate",
+        "onCommand:translator.toggleCaptureWord"
     ],
     "main": "./out/extension",
     "contributes": {
-        "commands": [
+        "commands": [{
+                "command": "translator.translate",
+                "title": "Translate"
+            },
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "translator.toggleCaptureWord",
+                "title": "Toggle - Capture Word"
             }
-        ]
+        ],
+        "menus": {
+            "editor/context": [{
+                "command": "translator.translate",
+                "group": "navigation"
+            }]
+        },
+        "keybindings": [{
+            "command": "translator.translate",
+            "key": "ctrl+alt+z"
+        }],
+        "configuration": {
+            "type": "object",
+            "title": "Translator",
+            "properties": {
+                "translator.captureWord": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether to translate when hovering on a word."
+                }
+            }
+        }
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
@@ -35,5 +76,9 @@
         "tslint": "^5.8.0",
         "@types/node": "^8.10.25",
         "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "applicationinsights": "^1.0.5",
+        "axios": "^0.18.0"
     }
 }
