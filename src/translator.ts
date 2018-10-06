@@ -33,7 +33,7 @@ export class Translator {
 
     public static async translate(source: string): Promise<string> {
         const result = (await axios.get(`https://fanyi.youdao.com/translate?&doctype=json&type=AUTO&i=${encodeURIComponent(source)}`)).data;
-        return result['translateResult'].map((translateResult: any) => translateResult[0]['tgt']).join("\n");
+        return result['translateResult'].map((translateResult: any) => translateResult.map((sentence: any) => sentence['tgt']).join('')).join('\n');
     }
 
     public toggleCaptureWord() {
