@@ -20,7 +20,7 @@ jobs:
   - script: |
       npm install
       npm run vscode:prepublish
-    isplayName: Install Dependencies and Compile Sources
+    displayName: Install Dependencies and Compile Sources
   
   - script: |
       npm run tslint
