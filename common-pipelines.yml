@@ -9,9 +9,11 @@ jobs:
         node_version: 8.x
       node_10_x:
         node_version: 10.x
+    maxParallel: 2
 
   steps:
   - script: |
+      apt-get install -y libgconf-2-4
       export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
       sh -e /etc/init.d/xvfb start;
       sleep 3;
