@@ -16,6 +16,9 @@ jobs:
       sudo apt-get update
       sudo apt-get install -y libxkbfile-dev pkg-config libsecret-1-dev libxss1 libgconf-2-4 dbus xvfb libgtk-3-0
       export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
+      which xvfb
+      which xvfb.init
+      sudo find / -name "*xvfb*"
       sudo sh -e /etc/init.d/xvfb start;
       sleep 3;
     condition: eq(variables['Agent.OS'], 'Linux')
