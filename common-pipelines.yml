@@ -13,12 +13,10 @@ jobs:
 
   steps:
   - script: |
-      apt-get update
-      apt-get install -y libxkbfile-dev pkg-config libsecret-1-dev libxss1 libgconf-2-4 dbus xvfb libgtk-3-0
+      sudo apt-get update
+      sudo apt-get install -y libxkbfile-dev pkg-config libsecret-1-dev libxss1 libgconf-2-4 dbus xvfb libgtk-3-0
       export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
-      cp build/tfs/linux/x64/xvfb.init /etc/init.d/xvfb
-      chmod +x /etc/init.d/xvfb
-      sh -e /etc/init.d/xvfb start;
+      sudo sh -e /etc/init.d/xvfb start;
       sleep 3;
     condition: eq(variables['Agent.OS'], 'Linux')
 
