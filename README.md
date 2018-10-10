@@ -1,5 +1,7 @@
 # Translator
 
+[![Join the chat at https://gitter.im/formulahendry/vscode-translator](https://badges.gitter.im/formulahendry/vscode-translator.svg)](https://gitter.im/formulahendry/vscode-translator?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Translate between English and Chinese.
 
 ## Usage
