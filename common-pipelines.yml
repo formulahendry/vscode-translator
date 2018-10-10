@@ -1,0 +1,29 @@
+jobs:
+- job: ${{ parameters.name }}
+  pool:
+    vmImage: ${{ parameters.vmImage }}
+
+  strategy:
+    matrix:
+      node_8_x:
+        node_version: 8.x
+      node_10_x:
+        node_version: 10.x
+
+  steps:
+  - script: |
+      export CXX="g++-4.9" CC="gcc-4.9" DISPLAY=:99.0;
+      sh -e /etc/init.d/xvfb start;
+      sleep 3;
+    condition: eq(variables['Agent.OS'], 'Linux')
+
+  - task: NodeTool@0
+    inputs:
+      version: $(node_version)
+   
+  - script: |
+      npm install
+      npm run vscode:prepublish
+  
+  - script: |
+      npm test --silent
