@@ -15,14 +15,18 @@ jobs:
   - task: NodeTool@0
     inputs:
       version: $(node_version)
+    displayName: 'Install Node.js'
    
   - script: |
       npm install
       npm run vscode:prepublish
+    isplayName: Install Dependencies and Compile Sources
   
   - script: |
       npm run tslint
+    displayName: Run TSLint
 
   - script: |
       npm test --silent
+    displayName: Run Unit Tests
     condition: ne(variables['Agent.OS'], 'Linux')
