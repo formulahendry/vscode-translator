@@ -17,6 +17,7 @@ suite("Extension Tests", function () {
 
     // Defines a Mocha unit test
     test("translate", async function() {
+        this.timeout(5 * 1000);
         assert.equal(await Translator.translate("你好"), "hello");
     });
 });

@@ -1,6 +1,6 @@
 # Translator
 
-[![Join the chat at https://gitter.im/formulahendry/vscode-translator](https://badges.gitter.im/formulahendry/vscode-translator.svg)](https://gitter.im/formulahendry/vscode-translator?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/formulahendry/vscode-translator](https://badges.gitter.im/formulahendry/vscode-translator.svg)](https://gitter.im/formulahendry/vscode-translator?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Marketplace Version](https://vsmarketplacebadge.apphb.com/version-short/formulahendry.translator.svg)](https://marketplace.visualstudio.com/items?itemName=formulahendry.translator) [![Build Status](https://formulahendry.visualstudio.com/vscode/_apis/build/status/formulahendry.vscode-translator?branchName=master)](https://formulahendry.visualstudio.com/vscode/_build/latest?definitionId=10)
 
 Translate between English and Chinese.
 
