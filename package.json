@@ -38,15 +38,24 @@
                 "title": "Translate"
             },
             {
+                "command": "translator.replaceWithTranslation",
+                "title": "Replace with Translation"
+            },
+            {
                 "command": "translator.toggleCaptureWord",
                 "title": "Toggle - Capture Word"
             }
         ],
         "menus": {
             "editor/context": [{
-                "command": "translator.translate",
-                "group": "navigation"
-            }]
+                    "command": "translator.translate",
+                    "group": "navigation@1"
+                },
+                {
+                    "command": "translator.replaceWithTranslation",
+                    "group": "navigation@2"
+                }
+            ]
         },
         "keybindings": [{
             "command": "translator.translate",

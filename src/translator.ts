@@ -25,15 +25,57 @@ export class Translator {
         }
         const selection = editor.selection;
         const text = selection.isEmpty ? editor.document.getText() : editor.document.getText(editor.selection);
-        const target = await Translator.translate(text);
-        this.outputChannel.show();
-        this.outputChannel.appendLine(target);
-        this.outputChannel.appendLine('\n');
+
+        await vscode.window.withProgress({
+            title: `Translating`,
+            location: vscode.ProgressLocation.Notification,
+        }, async () => {
+            const target = await Translator.translate(text, true);
+            if (!target) {
+                return;
+            }
+            this.outputChannel.show();
+            this.outputChannel.appendLine(target);
+            this.outputChannel.appendLine('\n');
+        });
     }
 
-    public static async translate(source: string): Promise<string> {
-        const result = (await axios.get(`https://fanyi.youdao.com/translate?&doctype=json&type=AUTO&i=${encodeURIComponent(source)}`)).data;
-        return result['translateResult'].map((translateResult: any) => translateResult.map((sentence: any) => sentence['tgt']).join('')).join('\n');
+    public async replaceWithTranslation() {
+        AppInsightsClient.sendEvent('replaceWithTranslation');
+        const editor = vscode.window.activeTextEditor;
+        if (!editor) {
+            return;
+        }
+        const selection = editor.selection;
+        if (selection.isEmpty) {
+            return;
+        }
+        const text = editor.document.getText(editor.selection);
+
+        await vscode.window.withProgress({
+            title: `Replacing with Translation`,
+            location: vscode.ProgressLocation.Notification,
+        }, async () => {
+            const target = await Translator.translate(text, true);
+            if (!target) {
+                return;
+            }
+            await editor.edit(editBuilder => {
+                editBuilder.replace(selection, target);
+            });
+        });
+    }
+
+    public static async translate(source: string, showErrorMessage: boolean = false): Promise<string> {
+        try {
+            const result = (await axios.get(`https://fanyi.youdao.com/translate?&doctype=json&type=AUTO&i=${encodeURIComponent(source)}`)).data;
+            return result['translateResult'].map((translateResult: any) => translateResult.map((sentence: any) => sentence['tgt']).join('')).join('\n');
+        } catch (error) {
+            if (showErrorMessage) {
+                vscode.window.showErrorMessage(error.toString());
+            }
+            return "";
+        }
     }
 
     public toggleCaptureWord() {

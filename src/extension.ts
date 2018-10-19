@@ -11,6 +11,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(vscode.commands.registerCommand('translator.translate', () => translator.translate()));
 
+    context.subscriptions.push(vscode.commands.registerCommand('translator.replaceWithTranslation', () => translator.replaceWithTranslation()));
+
     context.subscriptions.push(vscode.commands.registerCommand('translator.toggleCaptureWord', () => translator.toggleCaptureWord()));
 }
 
