@@ -2,7 +2,7 @@
     "name": "translator",
     "displayName": "Translator",
     "description": "Translate between English and Chinese",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "publisher": "formulahendry",
     "icon": "logo.png",
     "engines": {
