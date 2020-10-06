@@ -12,7 +12,7 @@ export class TranslatorHoverProvider implements HoverProvider {
             if (source) {
                 const translateResult = await Translator.translate(source);
                 if(Translator.needGuess) {
-                    const formatText = source.replace(/([A-Z])/g," $1").toLowerCase();
+                    const formatText = source.replace(/([A-Z])/g," $1").replace(/([\-\_\.])/g," ").toLowerCase();
                     const target2 = await Translator.translate(formatText, true);
                     Translator.needGuess = false;
                     return new Hover(`${translateResult}(您可能想要的结果是${formatText}=>${target2})`);
