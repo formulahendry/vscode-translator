@@ -8,6 +8,7 @@ import { AppInsightsClient } from "./appInsightsClient";
 export class Translator {
     private outputChannel: vscode.OutputChannel;
     private captureWordStatusBarItem: vscode.StatusBarItem;
+    public static needGuess: Boolean;
 
     constructor() {
         this.outputChannel = vscode.window.createOutputChannel('Translator');
@@ -15,6 +16,7 @@ export class Translator {
         this.captureWordStatusBarItem.text = Utility.getConfiguration().get(Constants.CaptureWordKey) ? Constants.CaptureWordText : Constants.NotCaptureWordText;
         this.captureWordStatusBarItem.command = 'translator.toggleCaptureWord';
         this.captureWordStatusBarItem.show();
+        Translator.needGuess = false;
     }
 
     public async translate() {
@@ -36,6 +38,11 @@ export class Translator {
             }
             this.outputChannel.show();
             this.outputChannel.appendLine(target);
+            if(Translator.needGuess) {
+                const formatText = text.replace(/([A-Z])/g," $1").replace(/([\-\_\.])/g," ").toLowerCase();
+                const target2 = await Translator.translate(formatText, true);
+                this.outputChannel.appendLine(`您可能想要的结果是${formatText}=>${target2}`);
+            }
             this.outputChannel.appendLine('\n');
         });
     }
@@ -69,6 +76,9 @@ export class Translator {
     public static async translate(source: string, showErrorMessage: boolean = false): Promise<string> {
         try {
             const result = (await axios.get(`https://fanyi.youdao.com/translate?&doctype=json&type=AUTO&i=${encodeURIComponent(source)}`)).data;
+            if(/([A-Z\-\_\.])/.test(source) && !source.includes(' ')) {
+                this.needGuess = true;
+            }
             return result['translateResult'].map((translateResult: any) => translateResult.map((sentence: any) => sentence['tgt']).join('')).join('\n');
         } catch (error) {
             if (showErrorMessage) {
